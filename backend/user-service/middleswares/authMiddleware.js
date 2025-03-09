@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const authMiddleware = (req, res, next) => {
   try {
@@ -13,15 +13,13 @@ const authMiddleware = (req, res, next) => {
     }
 
     const token = authHeader.split(' ')[1];
+    console.log(token);
     if (!token) {
       return res.status(401).json({ message: 'Token is missing' });
     }
     
     // Verify token
-    const decoded = jwt.verify(
-      token, 
-      process.env.JWT_SECRET || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1NiIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzQwMTM1NjEyLCJleHAiOjE3NDA3NDA0MTJ9.zUhKAi8PO7X8IAfPcbGw2j2LhdtuLBW6ww2E0VuthXU"
-    );
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     if (!decoded.id) {
       return res.status(401).json({ message: 'Invalid token structure - missing user ID' });
@@ -47,4 +45,4 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;

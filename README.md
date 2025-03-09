@@ -38,6 +38,17 @@ Forkina is a centralized platform for academic institutions to manage student pr
 3. **Cultural Integration**: Use Tunisian-inspired UI/UX elements.  
 4. **Agile Workflow**: Develop in sprints with iterative testing.  
 
+## Important notes
+
+Please use the ES syntax rather than the CommonJS syntax in the controllers and in the exports
+
+**Example of what we need to use**
+- Controller : const register = async (req, res) => {}
+- Exporting the modules: export default router;
+
+**Example of what we shouldn't use**
+- Controller: exports.createUser = async (req, res) => {}
+- Exporting the modules: module.exports = router;
 ---
 
 **Inspired by Tunisian web developers, Built for Global Academia.**  

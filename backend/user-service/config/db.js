@@ -1,11 +1,10 @@
-// config/db.js
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const MONGO_URI = 'mongodb://mongo:27017/user-db';
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/user-db"
 
 mongoose.set('strictQuery', true);
 
-const connectDB = async () => {
+export const connectDB = async () => {
   try {
     console.log('Attempting to connect with URI:', MONGO_URI);
     await mongoose.connect(MONGO_URI, {
@@ -19,4 +18,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB

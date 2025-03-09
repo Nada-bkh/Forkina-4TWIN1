@@ -1,22 +1,24 @@
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const GitHubStrategy = require("passport-github2").Strategy;
-const passport = require("passport");
-const User = require("../models/userModel");
+import {Strategy as GoogleStrategy} from "passport-google-oauth20";
+import {Strategy as GitHubStrategy} from "passport-github2";
+import passport from "passport";
+import User from "../models/userModel.js";
+import dotenv from "dotenv";
 
-const BACKEND_URL = "http://localhost:5001";
-const CLIENT_URL = "http://localhost:5173";
+dotenv.config()
+
+const BACKEND_URL = `http://localhost:${process.env.PORT}`;
 
 const GOOGLE_CONFIG = {
-  clientID: "307626813879-okfk3jlk3b3ivq9gcih2qe1je8enr5l4.apps.googleusercontent.com",
-  clientSecret: "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",
+  clientID: "307626813879-okfk3jlk3b3ivq9gcih2qe1je8enr5l4.apps.googleusercontent.com", // TODO: move to git secrets
+  clientSecret: "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", // TODO: move to git secrets
   callbackURL: `${BACKEND_URL}/auth/google/callback`,
   scope: ["profile", "email"]
 };
 
 const GITHUB_CONFIG = {
-  clientID: "Ov23li8PPtcOLA4w0sis",
-  clientSecret: "e671587747f604e9782b197e6bb067533db9d234",
-  callbackURL: `${BACKEND_URL}/auth/github/callback`,
+  clientID: process.env.GITHUB_CLIENT_ID, // TODO: move to git secrets
+  clientSecret: process.env.GITHUB_CLIENT_SECRET, // TODO: move to git secrets
+  callbackURL: process.env.GITHUB_CALLBACK_URL,
   scope: ["user:email"],
   authorizationURL: "https://github.com/login/oauth/authorize",
   passReqToCallback: true,
@@ -29,7 +31,7 @@ console.log('Passport Config:', {
   GITHUB_CLIENT_ID: GITHUB_CONFIG.clientID,
   callbackURL: GOOGLE_CONFIG.callbackURL,
   githubCallbackURL: GITHUB_CONFIG.callbackURL,
-  CLIENT_URL: CLIENT_URL
+  CLIENT_URL: process.env.CLIENT_URL
 });
 
 // Check for required environment variables
@@ -112,7 +114,7 @@ passport.use(
         const userData = {
           githubId: profile.id,
           firstName: firstName,
-          lastName: lastName || 'User',  // ✅ Ensuring lastName is not empty
+          lastName: lastName || 'User',
           email: profile.emails?.[0]?.value || `${profile.username}@github.com`,
           avatar: profile.photos?.[0]?.value,
           isGithubUser: true
@@ -148,4 +150,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-module.exports = passport;
+export default passport;

@@ -1,7 +1,6 @@
-// controllers/userController.js
-const User = require('../models/userModel');
+import User from "../models/userModel.js";
 
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
     const user = new User(req.body);
     await user.save();
@@ -11,7 +10,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const { role } = req.query;
     let query = {};
@@ -27,7 +26,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).populate('teamRef');
     if (!user) {
@@ -39,7 +38,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     console.log('Updating user with ID:', req.params.id);
     console.log('Update data:', req.body);
@@ -62,7 +61,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     console.log('Attempting to delete user with ID:', req.params.id);
     

@@ -1,7 +1,7 @@
 // config/db.js
 const mongoose = require('mongoose');
 
-const MONGO_URI = 'mongodb://mongo:27017/notification-db';
+const MONGO_URI = 'mongodb://mongo:27017/notification-db  ';
 
 mongoose.set('strictQuery', true);
 

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const verifyEmailTokenSchema = new mongoose.Schema({
   token: {
@@ -15,5 +15,6 @@ const verifyEmailTokenSchema = new mongoose.Schema({
   }
 });
 
-const VerifyEmailToken = mongoose.model('VerifyEmailToken', verifyEmailTokenSchema);
-module.exports = VerifyEmailToken;
+export const VerifyEmailToken = mongoose.model('VerifyEmailToken', verifyEmailTokenSchema);
+
+export default VerifyEmailToken

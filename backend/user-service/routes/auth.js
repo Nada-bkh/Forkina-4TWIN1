@@ -1,9 +1,16 @@
-const router = require("express").Router();
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
+import {Router} from "express";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import {jwtConfig} from "../config/authConfig.js";
+import passport from "../config/passport.js";
 
-const CLIENT_URL = "http://localhost:5173";
-const FAILURE_URL = "http://localhost:5173/signin";
+
+dotenv.config()
+
+const router = Router();
+
+const CLIENT_URL = process.env.CLIENT_URL;
+const FAILURE_URL = `${CLIENT_URL}/signin`;
 
 // Initial Google authentication
 router.get("/google", 
@@ -25,7 +32,7 @@ router.get("/github",
 router.get(
   "/google/callback",
   (req, res, next) => {
-    passport.authenticate("google", { session: true }, async (err, user, info) => {
+    passport.authenticate("google", { session: true }, async (err, user, _) => {
       if (err) {
         console.error('Authentication error:', err);
         return res.redirect(FAILURE_URL);
@@ -39,21 +46,21 @@ router.get(
       try {
         // Generate token with consistent field names
         const token = jwt.sign(
-          { 
+          {
             id: user._id.toString(),
             email: user.email,
             role: user.userRole 
           },
-          process.env.JWT_SECRET || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1NiIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzQwMTM1NjEyLCJleHAiOjE3NDA3NDA0MTJ9.zUhKAi8PO7X8IAfPcbGw2j2LhdtuLBW6ww2E0VuthXU",
-          { expiresIn: '7d' }
+            jwtConfig.jwtSecret,
+          { expiresIn: jwtConfig.jwtExpiration }
         );
 
         // Set token in cookie
         res.cookie('auth_token', token, {
           httpOnly: false, // Allow JavaScript access
-          secure: process.env.NODE_ENV === 'production',
+          secure: true,
           sameSite: 'lax',
-          maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+          maxAge: jwtConfig.jwtExpirationInMs // 7 days
         });
 
         // Redirect to a transfer page
@@ -67,10 +74,9 @@ router.get(
 );
 
 // GitHub auth callback
-router.get(
-  "/github/callback",
+router.get("/github/callback",
   (req, res, next) => {
-    passport.authenticate("github", { session: true }, async (err, user, info) => {
+    passport.authenticate("github", { session: true }, async (err, user, _) => {
       if (err) {
         console.error('GitHub Authentication error:', err);
         return res.redirect(FAILURE_URL);
@@ -89,20 +95,20 @@ router.get(
             email: user.email,
             role: user.userRole 
           },
-          process.env.JWT_SECRET || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1NiIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzQwMTM1NjEyLCJleHAiOjE3NDA3NDA0MTJ9.zUhKAi8PO7X8IAfPcbGw2j2LhdtuLBW6ww2E0VuthXU",
-          { expiresIn: '7d' }
+          process.env.JWT_SECRET,
+          { expiresIn: jwtConfig.jwtExpiration }
         );
 
         // Set token in cookie
         res.cookie('auth_token', token, {
           httpOnly: false,
-          secure: process.env.NODE_ENV === 'production',
+          secure: true,
           sameSite: 'lax',
-          maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+          maxAge: jwtConfig.jwtExpirationInMs
         });
 
         // Log the user in
-        req.login(user, (err) => {
+        await req.login(user, (err) => {
           if (err) {
             console.error('Login error:', err);
             return res.redirect(FAILURE_URL);
@@ -147,4 +153,4 @@ router.get("/logout", (req, res) => {
   });
 });
 
-module.exports = router; 
+export default router

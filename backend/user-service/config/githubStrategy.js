@@ -1,6 +1,8 @@
-const GitHubStrategy = require('passport-github2').Strategy;
-const mongoose = require('mongoose');
-const User = require('../models/User'); // Adjust the path to your User model
+import {Strategy as GitHubStrategy} from "passport-github2";
+import User from "../models/User.js"
+import dotenv from "dotenv";
+
+dotenv.config()
 
 module.exports = function (passport) {
     passport.use(

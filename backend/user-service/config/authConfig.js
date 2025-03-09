@@ -1,6 +1,9 @@
-require("dotenv").config();
+import {config} from "dotenv";
 
-module.exports = {
-    jwtSecret: process.env.JWT_SECRET || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1NiIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzQwMTM1NjEyLCJleHAiOjE3NDA3NDA0MTJ9.zUhKAi8PO7X8IAfPcbGw2j2LhdtuLBW6ww2E0VuthXU",
+config();
+
+export const jwtConfig = {
+    jwtSecret: process.env.JWT_SECRET,
     jwtExpiration: "7d", // Token expires in 7 days
+    jwtExpirationInMs: 7 * 24 * 60 * 60 * 1000, // Token expires in 7 days (in ms)
 };

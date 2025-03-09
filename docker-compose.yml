@@ -5,7 +5,7 @@ services:
   user-service:
     build:
       context: ./backend/user-service
-      dockerfile: ./user-service/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5001:5001"
     depends_on:
@@ -19,7 +19,7 @@ services:
   project-service:
     build:
       context: ./backend/project-service
-      dockerfile: ./project-service/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5002:5002"
     depends_on:
@@ -33,7 +33,7 @@ services:
   task-service:
     build:
       context: ./backend/task-service
-      dockerfile: ./task-service/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5003:5003"
     depends_on:
@@ -47,7 +47,7 @@ services:
   notification-service:
     build:
       context: ./backend/notification-service
-      dockerfile: ./notification-service/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5004:5004"
     depends_on:
@@ -61,7 +61,7 @@ services:
   milestone-service:
     build:
       context: ./backend/milestone-service
-      dockerfile: ./milestone-service/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5005:5005"
     depends_on:
@@ -84,10 +84,6 @@ services:
       - task-service
       - notification-service
       - milestone-service
-    networks:
-      - frontend
-    environment:
-      - REACT_APP_API_URL=http://localhost:5001
 
   # MongoDB Service for all backend services
   mongodb:
@@ -99,12 +95,9 @@ services:
       - mongo_data:/data/db
     networks:
       - backend
-      - frontend
 
 networks:
   backend:
-    driver: bridge
-  frontend:
     driver: bridge
 
 volumes:

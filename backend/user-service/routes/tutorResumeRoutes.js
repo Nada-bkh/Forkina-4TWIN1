@@ -1,12 +1,12 @@
 // routes/tutorResumeRoutes.js
-const express = require('express');
-const router = express.Router();
-const tutorResumeController = require('../controllers/tutorResumeController');
+import express from "express";
+import tutorResumeController from "../controllers/tutorResumeController.js";
 
+const router = express.Router();
 router.post('/', tutorResumeController.createTutorResume);
 router.get('/', tutorResumeController.getAllTutorResumes);
 router.get('/:id', tutorResumeController.getTutorResumeById);
 router.put('/:id', tutorResumeController.updateTutorResume);
 router.delete('/:id', tutorResumeController.deleteTutorResume);
 
-module.exports = router;
+export default router

@@ -1,12 +1,10 @@
-const jwt = require("jsonwebtoken");
-const { jwtSecret, jwtExpiration } = require("../config/authConfig");
+import jwt from "jsonwebtoken";
+import {jwtConfig} from "../config/authConfig.js";
 
-const generateToken = (user) => {
+export const generateToken = (user) => {
     return jwt.sign(
         { id: user.idUser, role: user.role },
-        jwtSecret,
-        { expiresIn: jwtExpiration }
+        jwtConfig.jwtSecret,
+        { expiresIn: jwtConfig.jwtExpiration }
     );
 };
-
-module.exports = generateToken;

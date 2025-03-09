@@ -1,16 +1,16 @@
-// routes/userRoutes.js
-const express = require('express');
+import express from "express";
+import authMiddleware from "../middleswares/authMiddleware.js";
+import Users from "../models/userModel.js";
+import * as userController from "../controllers/userController.js";
+
 const router = express.Router();
-const userController = require('../controllers/userController');
-const User = require('../models/userModel');
-const authMiddleware = require('../middlewares/authMiddleware');
 
 // Get user profile - this specific route should come before the /:id route
 router.get('/profile', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await Users.findById(req.user.id).select('-password');
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Users not found' });
     }
     res.json(user);
   } catch (error) {
@@ -30,9 +30,9 @@ router.put('/:id', authMiddleware, async (req, res) => {
     }
 
     // Find user and update
-    const user = await User.findById(req.params.id);
+    const user = await Users.findById(req.params.id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Users not found' });
     }
 
     // Update fields
@@ -47,7 +47,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
     await user.save();
 
     // Return updated user without password
-    const updatedUser = await User.findById(req.params.id).select('-password');
+    const updatedUser = await Users.findById(req.params.id).select('-password');
     res.json(updatedUser);
   } catch (error) {
     console.error('Profile update error:', error);
@@ -61,4 +61,4 @@ router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUserById);
 router.delete('/:id', userController.deleteUser);
 
-module.exports = router;
+export default router;
