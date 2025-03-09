@@ -1,7 +1,0 @@
-project
-/backend/node_modules/
-/.idea/
-/project/node_modules/
-/project/package-lock.json/
-package-lock.json
-.gitignore
