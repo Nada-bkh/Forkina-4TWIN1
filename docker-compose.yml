@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  # User Service
+  user-service:
+    build:
+      context: ./backend/user-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb:27017/users
+    networks:
+      - backend
+
+  # Project Service
+  project-service:
+    build:
+      context: ./backend/project-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb:27017/projects
+    networks:
+      - backend
+
+  # Task Service
+  task-service:
+    build:
+      context: ./backend/task-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb:27017/tasks
+    networks:
+      - backend
+
+  # Notification Service
+  notification-service:
+    build:
+      context: ./backend/notification-service
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb:27017/notifications
+    networks:
+      - backend
+
+  # Milestone Service
+  milestone-service:
+    build:
+      context: ./backend/milestone-service
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    depends_on:
+      - mongodb
+    environment:
+      - DB_URI=mongodb://mongodb:27017/milestones
+    networks:
+      - backend
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - project-service
+      - task-service
+      - notification-service
+      - milestone-service
+    networks:
+      - frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:5001
+
+  # MongoDB Service for all backend services
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+      - frontend
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
+
+volumes:
+  mongo_data:
