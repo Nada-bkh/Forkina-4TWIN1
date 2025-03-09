@@ -53,21 +53,6 @@ services:
     networks:
       - backend
 
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: projects
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - backend
-
-  redis:
-    image: redis:latest
-    networks:
-      - backend
-
 networks:
   backend:
     driver: bridge

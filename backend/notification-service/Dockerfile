@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR /usr/src/app
+WORKDIR /backend/notification-service
 
 COPY package*.json ./
 RUN npm install
