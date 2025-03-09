@@ -1,7 +1,7 @@
 // config/db.js
 const mongoose = require('mongoose');
 
-const MONGO_URI = 'mongodb://mongo:27017/milestones';
+const MONGO_URI = 'mongodb://mongo:27017/milestone-db';
 
 mongoose.set('strictQuery', true);
 

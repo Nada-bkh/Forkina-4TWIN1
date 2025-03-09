@@ -1,7 +1,7 @@
 // config/db.js
 const mongoose = require('mongoose');
 
-const MONGO_URI = 'mongodb://mongo:27017/users';
+const MONGO_URI = 'mongodb://mongo:27017/user-db';
 
 mongoose.set('strictQuery', true);
 

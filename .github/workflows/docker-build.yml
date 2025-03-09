@@ -22,14 +22,50 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Backend Image
+      - name: Build and push user Image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
-          file: ./backend/Dockerfile
+          context: ./user-service
+          file: ./backend/user-service/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKER_USERNAME }}/forkina-backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/forkina-user-service:latest
+
+      - name: Build and push milestone Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./milestone-service
+          file: ./backend/milestone-service/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USERNAME }}/forkina-milestone-service:latest
+
+      - name: Build and push notification Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./notification-service
+          file: ./backend/notification-service/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USERNAME }}/forkina-notification-service:latest
+
+      - name: Build and push project Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./project-service
+          file: ./backend/project-service/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USERNAME }}/forkina-project-service:latest
+
+      - name: Build and push task Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./task-service
+          file: ./backend/task-service/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USERNAME }}/forkina-task-service:latest
 
       - name: Build and push Frontend Image
         uses: docker/build-push-action@v5

@@ -1,0 +1,34 @@
+# Node modules (to avoid copying dependencies into Docker)
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment files (security reasons)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Git
+.git/
+.gitignore
+
+# Editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Docker-compose override
+docker-compose.override.yml
+
+# Build directories
+dist/
+build/
+
+# Cache files
+.cache/
+.vite/

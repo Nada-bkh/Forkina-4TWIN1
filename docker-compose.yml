@@ -5,13 +5,13 @@ services:
   user-service:
     build:
       context: ./backend/user-service
-      dockerfile: Dockerfile
+      dockerfile: ./user-service/Dockerfile
     ports:
-      - "3001:3001"
+      - "5001:5001"
     depends_on:
       - mongodb
     environment:
-      - DB_URI=mongodb://mongodb:27017/users
+      - DB_URI=mongodb://mongodb:27017/user-db
     networks:
       - backend
 
@@ -19,13 +19,13 @@ services:
   project-service:
     build:
       context: ./backend/project-service
-      dockerfile: Dockerfile
+      dockerfile: ./project-service/Dockerfile
     ports:
-      - "3002:3002"
+      - "5002:5002"
     depends_on:
       - mongodb
     environment:
-      - DB_URI=mongodb://mongodb:27017/projects
+      - DB_URI=mongodb://mongodb:27017/project-db
     networks:
       - backend
 
@@ -33,13 +33,13 @@ services:
   task-service:
     build:
       context: ./backend/task-service
-      dockerfile: Dockerfile
+      dockerfile: ./task-service/Dockerfile
     ports:
-      - "3003:3003"
+      - "5003:5003"
     depends_on:
       - mongodb
     environment:
-      - DB_URI=mongodb://mongodb:27017/tasks
+      - DB_URI=mongodb://mongodb:27017/task-db
     networks:
       - backend
 
@@ -47,13 +47,13 @@ services:
   notification-service:
     build:
       context: ./backend/notification-service
-      dockerfile: Dockerfile
+      dockerfile: ./notification-service/Dockerfile
     ports:
-      - "3004:3004"
+      - "5004:5004"
     depends_on:
       - mongodb
     environment:
-      - DB_URI=mongodb://mongodb:27017/notifications
+      - DB_URI=mongodb://mongodb:27017/notification-db
     networks:
       - backend
 
@@ -61,13 +61,13 @@ services:
   milestone-service:
     build:
       context: ./backend/milestone-service
-      dockerfile: Dockerfile
+      dockerfile: ./milestone-service/Dockerfile
     ports:
-      - "3005:3005"
+      - "5005:5005"
     depends_on:
       - mongodb
     environment:
-      - DB_URI=mongodb://mongodb:27017/milestones
+      - DB_URI=mongodb://mongodb:27017/milestone-db
     networks:
       - backend
 
