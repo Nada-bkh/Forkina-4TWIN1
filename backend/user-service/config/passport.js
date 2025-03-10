@@ -9,16 +9,16 @@ dotenv.config()
 const BACKEND_URL = `http://localhost:${process.env.PORT}`;
 
 const GOOGLE_CONFIG = {
-  clientID: "307626813879-okfk3jlk3b3ivq9gcih2qe1je8enr5l4.apps.googleusercontent.com", // TODO: move to git secrets
-  clientSecret: "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", // TODO: move to git secrets
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: `${BACKEND_URL}/auth/google/callback`,
   scope: ["profile", "email"]
 };
 
 const GITHUB_CONFIG = {
-  clientID: process.env.GITHUB_CLIENT_ID, // TODO: move to git secrets
-  clientSecret: process.env.GITHUB_CLIENT_SECRET, // TODO: move to git secrets
-  callbackURL: process.env.GITHUB_CALLBACK_URL,
+  clientID: process.env.API_GITHUB_CLIENT_ID,
+  clientSecret: process.env.API_GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.API_GITHUB_CALLBACK_URL,
   scope: ["user:email"],
   authorizationURL: "https://github.com/login/oauth/authorize",
   passReqToCallback: true,

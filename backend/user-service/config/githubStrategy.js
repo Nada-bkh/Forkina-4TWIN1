@@ -8,9 +8,9 @@ module.exports = function (passport) {
     passport.use(
         new GitHubStrategy(
             {
-                clientID: process.env.GITHUB_CLIENT_ID,
-                clientSecret: process.env.GITHUB_CLIENT_SECRET,
-                callbackURL: process.env.GITHUB_CALLBACK_URL,
+                clientID: process.env.API_GITHUB_CLIENT_ID,
+                clientSecret: process.env.API_GITHUB_CLIENT_SECRET,
+                callbackURL: process.env.API_GITHUB_CALLBACK_URL,
                 scope: ['user:email']
             },
             async (accessToken, refreshToken, profile, done) => {

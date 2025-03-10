@@ -1,7 +1,8 @@
 // models/userModel.js
-const mongoose = require('mongoose');
-const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+
 const { Schema } = mongoose;
 
 const UserRole = {
@@ -109,4 +110,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

@@ -1,21 +1,14 @@
-const bcrypt = require("bcryptjs");
-const User = require("../models/userModel");
-const generateToken = require("../utils/generateToken");
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-const fetch = require('node-fetch');
+import User from "../models/userModel.js";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
+import Verifyemail from "../models/VerifyEmailToken.js";
+
 const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://mon-app.com' : 'http://localhost:5173';
-const { OAuth2Client } = require('google-auth-library');
-const jwt = require('jsonwebtoken');
-
-const PasswordResetToken = require('../models/PasswordResetToken');
-const Verifyemail = require('../models/VerifyEmailToken');
-
 const invalidatedTokens = new Set();
 
 // Register function
 const register = async (req, res) => {
-  const { firstName, lastName, email, password, role, adminSecret } = req.body;
+  const { firstName, lastName, email, password, role, _ } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: "User already exists" });
@@ -54,7 +47,7 @@ const resetPassword = async (req, res) => res.status(200).json({ message: "Reset
 const checkTokenValidity = async (req, res, next) => next();
 
 // Export all functions
-module.exports = {
+export default {
   register,
   verifyEmail,
   login,
