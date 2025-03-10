@@ -4,8 +4,8 @@ services:
   # User Service
   user-service:
     build:
-      context: ./backend/user-service
-      dockerfile: Dockerfile
+      context: ./backend
+      dockerfile: /user-service/Dockerfile
     ports:
       - "5001:5001"
     depends_on:
