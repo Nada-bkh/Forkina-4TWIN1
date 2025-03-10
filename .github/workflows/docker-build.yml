@@ -25,7 +25,7 @@ jobs:
       - name: Build and push user Image
         uses: docker/build-push-action@v5
         with:
-          context: ./user-service
+          context: ./backend/user-service
           file: ./backend/user-service/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
